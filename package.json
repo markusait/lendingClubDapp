@@ -1,0 +1,30 @@
+{
+  "name": "lendingclub",
+  "version": "1.0.0",
+  "description": "--- **Installation**",
+  "main": "compileContract.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "browser-solc": "^1.0.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "lite-server": "^2.4.0",
+    "truffle-hdwallet-provider": "^0.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uWinkel/LendingClub.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uWinkel/LendingClub/issues"
+  },
+  "homepage": "https://github.com/uWinkel/LendingClub#readme"
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ethereum Lending Club </title>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">Lending Club</a>
+      <ul class="right hide-on-med-and-down">
+      </ul>
+      <a href="#one" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Lending CLub</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">Come together as friends and lend </h5>
+        </div>
+        <div class="row center">
+          <a href="#one" class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
+        </div>
+        <br><br>
+      </div>
+    </div>
+    <div class="siteHeader parallax">
+      <!-- <img src="background1.jpg" alt="Unsplashed background img 1"> -->
+    </div>
+    </div>
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="advantages offset-l1  s12 m4 card-panel hoverable">
+              <h3 class="center">Welcome to the Lending Club Dapp</h4>
+                <p>
+                  The Lending Club Dapp is a decentralized Ethereum App that you can use to start a lending Club with your friends.
+                  All you need to get started is a Ethereum account with some Ether and the Meta Mask Chrome extension.
+                  Let me give you an example scenario to show you how it works.
+                </p>
+                <p>
+                  Alice, Bob and Charlie are friends that want to do an investment and do not want to pay high fees to a bank for that.
+                  They decide to use the Lending Club Dapp instead to pay 10$ worth of Eth to the smart contract each Month.
+                  After everyone has payed the contract a random winner will be decided. First Charlie, then Bob and lastly Alice is payed out.
+                  Now for Alice this was not too beneficial be cause she could have also saved the money.
+                  But Bob and Charlie were able to make a small investment.
+                  </p>
+                  <p>
+                  If Dave, Ed, Francise, Gina, Hillary, Isaac, Joe, Klaus and Lennard joined the party,
+                  each of them will have a chance for a payout of 120$ each Month.
+                  Using randomness makes things more fair. Alternatively an order after which participants will get payed out can easily be specificyed.
+                  You can find the source code to the Dapp here:
+                </p>
+        </div>
+      </div>
+    </div>
+  </div>
+        <!-- <div class="advantages offset-l1  col s12 m4 card-panel hoverable">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">User Experience Focused</h5>
+            <p class="light">
+              Come together as friends and start a Lending Club. Within a day/week/month each participant pays an equal amount to the contract.
+              The contract then decides a winner and pays out the deposited funds to him.
+            </p>
+          </div>
+        </div>
+        <div class="advantages offset-l1  col s12 m4 card-panel hoverable">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
+            <h5 class="center">Customizable</h5>
+            <p class="light">
+              You can define all the addresses of each participant,
+              define the required amount that should be payed on each round
+              and a certain time frame after which the money can be withdrawled
+            </p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="advantages offset-l1  s12 m4 card-panel hoverable">
+              <h3 class="center">How it works</h4>
+              <p> <b>1.</b> Define a contrat or enter the address of an exsisiting lending Club contract </p>
+              <p> <b>2.</b> Each participant pays contract using the addreses and amount defined previously </p>
+              <p> <b>3.</b> Inizialize a payout to a random participant of the contract </p>
+
+              <p>
+
+              </p>After these 3 Steps you can start a new Iteration.
+              The Current Contract Round field will show you
+              how many more rounds to go. After all participants have been paid out you can set new contract details </p>
+              <p>
+                As of right now sending payments is only possible with MetaMask. (Please not that the plugin can be a bit buggy)
+              </p>
+            </div>
+        </div>
+
+        <a href="https://metamask.io/" target="_blank"><img src="./assets/meta.png" /></a>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="container">
+    <div id="one" class="section">
+      <div class="col">
+        <div id="contactCreation" class="advantages offset-l1  col s12 m4 card-panel hoverable">
+          <div class="icon-block">
+            <h5 class="center">Select exsisting Contract</h5>
+            <p>
+              You can type in the address of an exsisting contract to interact with
+              Or create a new Contract below
+            </p>
+            <div class="exsistingContractChip">
+              <input id="exsistingcontractAddress" class="ethInput validate">
+            </div>
+            <button id="initexsistingContract" class="btn waves-effect waves-light" type="button" name="action">Submit
+              <i class="material-icons right">send</i>
+          </div>
+          <h5 class="center"> Set Contract Details </h5>
+          <p class="light">
+            Fill in the address, the required amount and the time after which a payout can be undertaken (0 if no time limit)
+          </p>
+          <div class="row">
+            <form id="contractForm" class="col s12">
+              <div class="row">
+                <div class="chips-addresses">
+                  <input id="contractAddresses" class="ethInput validate">
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="amountPerPerson"  type="number" min="1" max="10000000000" class="validate">
+                  <label for="amountPerPerson">Amount per person in Wei </label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="payoutTime"  type="number" min="1" max="10000000000" class="validate">
+                  <label for="payoutTime">Time in seconds</label>
+                  <!-- maybe calendar date here? -->
+                </div>
+              </div>
+              <button id="initContract" class="btn waves-effect waves-light" type="button" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="advantages offset-l1  col s12 m4 card-panel hoverable">
+        <div class="icon-block">
+          <div class="center">
+            <h5> Send required Amount to Contract</h5>
+            <label for="contractAmountPerPerson">Amount to pay </label>
+            <p class="contractAmountPerPerson"> </p>
+            </p>
+            <label for="contractAddress">Contract Address </label>
+            <p class="contractAddress"></p>
+            <label for="paymentTxHash"> Transaction Hash of last Payment </label>
+            <p class="paymentTxHash"></p>
+            <div>
+              <button id="sendPayment" class="btn waves-effect waves-light" type="button" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="advantages offset-l1  col s12 m4 card-panel hoverable">
+        <div class="icon-block">
+          <div class="center">
+            <h5> Payout to random participant</h5>
+            <label for="contractpayOutTxHash"> Transaction Hash of last Payout </label>
+            <p class="contractpayOutTxHash"></p>
+            <div>
+              <button id="initializePayout" class="btn waves-effect waves-light" type="button" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="advantages offset-l1  col s12 m4 card-panel hoverable">
+        <div class="center icon-block">
+          <h5> Deployed Contract Details</h5>
+          <label for="contractRoundsLeft"> Lending Rounds left</label>
+          <p class="contractRoundsLeft"></p>
+          <label for="contractAddress">Contract Address </label>
+          <p class="contractAddress"></p>
+          <label for="contractAmountPerPerson">Amount per person in Wei </label>
+          <p class="contractAmountPerPerson"> </p>
+          <!-- <p> time</p> -->
+          <label for="contractParticipantsAddresses"> Participants' Addresses </label>
+          <p class="contractParticipantsAddresses"></p>
+          <label for="contractPotentialWinnerAddresses"> Potential Payout Winner Addresses </label>
+          <p class="contractPotentialWinnerAddresses"></p>
+          <label for="contractBalance"> Contract Balance </label>
+          <p id="contractBalance"> </p>
+          <label for="contractWinner"> Last payout winner </label>
+          <p id="contractWinner"> </p>
+          <label for="contractNextPayoutTime"> Next Payout possible in </label>
+          <p id="contractNextPayoutTime"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Crypto Lending </h5>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script>
+    $('.chips-addresses').chips({
+      data: [{
+        tag: '0x84effa2fd9f81fd259e858e09bdffdc08727e69c',
+      }, {
+        tag: '0x37ba829ebc4683a95009968a9d10a3c0ba55f18d',
+      },{
+        tag: '0xb5a89ef909e2d7f687b9e26b3e008a14ed92d836'
+      }],
+      limit: 10,
+      placeholder: "enter Ethereum address and press enter"
+    });
+    $('.exsistingContractChip').chips({
+      limit: 1,
+      placeholder: "enter contract address and press enter"
+    })
+  </script>
+  <script src="./js/materialize.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/web3.min.js"></script>
+  <script src="./js/truffle-contract.js"></script>
+
+</body>
+
+</html>
