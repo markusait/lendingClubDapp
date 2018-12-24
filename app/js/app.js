@@ -1,12 +1,11 @@
 class App {
   constructor() {
     this.web3Provider = null
-    this.netWorkId = 0
-    this.contractName = ':LendingClub'
+    //objs
     this.account
     this.deployedContract
-    //obj
     this.contractInstance
+
     this.contractAddress = ''
     this.numParticipantsPayed = 0
     this.contractParticipants = []
@@ -24,7 +23,7 @@ class App {
 
   init() {
     this.initWeb3();
-    this.eventHandlers()
+    this.clickEventHandlers()
     this.eventLoop()
   }
 
@@ -77,7 +76,7 @@ class App {
         this.deployedContract = instance
         return instance.setContractDetails(addresses, amountPerPerson, payoutTime);
       }).then((result) => {
-        this.setAppState(true)
+        this.initializeAppState()
         this.listenForEvents()
       }).catch(e => {
         console.log(e)
@@ -87,8 +86,8 @@ class App {
     else {
       this.deployedContract.setContractDetails(addresses, amountPerPerson, payoutTime)
         .then((result) => {
-          this.setAppState()
-          this.listenForEvents(true)
+          this.initializeAppState()
+          this.listenForEvents()
         }).catch(e => {
           console.log(e)
         })
@@ -99,7 +98,7 @@ class App {
   deployedContractInstance(address) {
     this.contractInstance.at(address).then((deployedContract) => {
       this.deployedContract = deployedContract
-      this.setAppState(true)
+      this.initializeAppState()
       this.listenForEvents()
     }).catch((e) => {
       console.log(e);
@@ -107,50 +106,45 @@ class App {
   }
 
   //setting the App state to the State of the contract
-  setAppState(stateInitialization) {
-    //on Contract initialization these parameters are set once
-    if (stateInitialization) {
+  initializeAppState(stateInitialization) {
       //setting contract address
       this.contractAddress = this.deployedContract.address
       //setting  required transaction amount
       this.deployedContract.amountPerPerson().then((amount) => {
         this.amountPerPerson = amount.toString()
       })
-
-      //looping through participanats Array
+      //resetting contractParticipants if new initialization
+      if(this.contractParticipants.length) this.contractParticipants = []
+      //looping through participanats Array and setting Winners as well
       this.deployedContract.getParticipantsCount().then((numParticipants) => {
         for (var i = 0; i < numParticipants.toString(); i++) {
           this.deployedContract.contractParticipants(i).then((participant) => {
             this.contractParticipants.push(participant)
             //because potential winners = contract Participants at initialization
             this.potentialWinners.push(participant)
+            //because roundsLeft = amount of potential Winners
+            this.roundsLeft = this.potentialWinners.length
           })
         }
       })
-    } else {
-      //setting contract balance
-      web3.eth.getBalance(this.contractAddress, (err, res) => {
-        if (!err) this.contractBalance = res.toString(10)
-      })
-      //looping through winners Array
-      // this.deployedContract.getPotentialWinnersCount().then((numPotentialWinners) => {
-      // // console.log(this.roundsLeft);
-      // this.potentialWinners = []
-      //   for (var i = 0; i < numPotentialWinners.toString(); i++) {
-      //     this.deployedContract.potentialWinners(i).then((potentialWinner) => {
-      //       this.potentialWinners.push(potentialWinner)
-      //     })
-      //   }
-      // })
     }
+
+  setBalance(){
+    web3.eth.getBalance(this.contractAddress, (err, res) => {
+        if (!err) {
+          this.contractBalance = res.toString(10)
+        } else {
+          console.log(err);
+        }
+      })
   }
 
+  //sending payment to contract
   sendPaymentToContract() {
     if (this.deployedContract) {
       this.deployedContract.deposit({
         value: this.amountPerPerson
       }).then((res) => {
-        // this.setAppState()
       }).catch((e) => {
         console.log(e)
       })
@@ -162,9 +156,6 @@ class App {
   initializePayout() {
     if (this.deployedContract) {
       this.deployedContract.initializePayoutProcess().then((txHash) => {
-        // this.payoutTxHash = txHash.tx
-        // this.contractBalance = 0
-        // this.setAppState()
       }).catch((e) => console.log(e))
     } else {
       alert("please define a contract first")
@@ -179,25 +170,26 @@ class App {
     }
     this.deployedContract.withdrawBackEvent(options).watch((err, event) => {
       alert("participant withdrew his funds! ", event)
-      this.setAppState()
+      this.setBalance()
     })
     this.deployedContract.participantPayedEvent(options).watch((err, event) => {
       //this.numParticipantsPayed - this.contractParticipants.length
       this.paymentTxHash = event.transactionHash
-      this.setAppState()
+      this.setBalance()
     })
     this.deployedContract.participantWonEvent(options).watch((err, event) => {
       this.contractBalance = 0
       this.lastPayoutWinner = event.args['_winner']
-      this.potentialWinners.filter(e => e !== this.lastPayoutWinner)
+      this.potentialWinners = this.potentialWinners.filter(e => e !== this.lastPayoutWinner)
+      this.roundsLeft = this.potentialWinners.length
       this.payoutTxHash = event.transactionHash
-      this.setAppState()
+      this.setBalance()
     })
   }
 
 
 
-  eventHandlers() {
+  clickEventHandlers() {
     $('#initexsistingContract').click(() => {
       let contractAddress = $('.exsistingContractChip')[0].M_Chips.chipsData[0].tag
       this.deployedContractInstance(contractAddress)
@@ -231,7 +223,11 @@ class App {
     //TODO use only classes
     if (this.deployedContract) {
       // if (this.potentialWinners > 0) $('#contactCreation').hide();
-      if (this.deployedContract) $('#contactCreation').hide();
+      if (this.roundsLeft > 0){
+        $('#contactCreation').hide();
+      } else {
+        $('#contactCreation').show();
+      }
       $('#contractBalance').html(this.contractBalance);
       $('.contractpayOutTxHash').html(this.payoutTxHash)
       $('.contractAddress').html(this.contractAddress);
@@ -245,27 +241,12 @@ class App {
     }
 
   }
-  updateWinners() {
-    if (this.deployedContract) {
-      this.roundsLeft = this.potentialWinners.length
-      this.deployedContract.getPotentialWinnersCount().then((numPotentialWinners) => {
-        this.potentialWinners = []
-        for (var i = 0; i < numPotentialWinners.toString(); i++) {
-          this.deployedContract.potentialWinners(i).then((potentialWinner) => {
-            this.potentialWinners.push(potentialWinner)
-          })
-        }
-      })
-    }
-  }
 
-  eventLoop() {
-    //listening for account changes of user with unpractical interval
+  //listening for account changes of user with unpractical interval
     //recommended by Meta Mask though
+  eventLoop() {
     this.account = web3.eth.accounts[0];
-
     setInterval((function() {
-      // this.setAppState()
       this.render()
       if (web3.eth.accounts[0] !== this.account) {
         this.account = web3.eth.accounts[0];
@@ -308,12 +289,3 @@ $(function() {
     app.init();
   });
 });
-
-
-
-// let accounts = web3.eth.accounts
-// //should have an on click event
-// //option value will have the account id
-// web3.eth.accounts.forEach((account, i) => {
-//   $("#selectAccount").append(new Option(account, i));
-// })
